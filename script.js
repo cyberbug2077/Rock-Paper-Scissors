@@ -69,3 +69,25 @@ function game() {
     }
     return sayIt(isWin) + " records:\n" + record;
 }
+
+const selections = document.querySelectorAll(".selections button");
+const result = document.querySelector(".results");
+const points = document.querySelector(".points");
+
+let yourPoint = 0;
+let comPoint = 0;
+let roundCount = 0;
+function oneClick(event) {
+    let computerSelection = getComputerChoice();
+    let playerSelection = this.id;
+    let isWin = judgeRound(playerSelection, computerSelection);
+    if (isWin > 0) yourPoint++;
+    if (isWin < 0) comPoint++;
+    roundCount++;
+    const record = document.createElement("p");
+    record.textContent = `Round ${roundCount}   ${playerSelection} beat ${computerSelection}`;
+    points.textContent = `your Point: ${yourPoint}  computer Point: ${comPoint}`;
+    result.appendChild(record);
+}
+
+selections.forEach(selection => selection.addEventListener('click', oneClick));
